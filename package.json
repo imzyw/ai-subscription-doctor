@@ -1,0 +1,11 @@
+{
+  "name": "ai-subscription-doctor",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "中文 AI 订阅报错离线查询和只读网络诊断",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "bin": { "ai-doctor": "./bin/doctor.mjs" },
+  "files": ["bin", "src", "data"],
+  "scripts": { "test": "node --test test/*.test.mjs" }
+}
