@@ -1,27 +1,53 @@
 # ai-subscription-doctor
 
-> **2026 AI 订阅网络环境体检与支付/风控报错离线诊断 CLI（ChatGPT / Codex / Gemini / Claude / Grok）**  
-> An open-source diagnostic CLI and troubleshooting knowledge base for AI subscription payment errors, region checks, and account safety.
+> **2026 AI 订阅网络环境体检、防封分流规则生成与支付风控报错离线诊断工具箱（ChatGPT / Codex / Gemini / Claude / Grok）**  
+> An open-source diagnostic CLI, routing rules generator, and troubleshooting knowledge base for AI subscription payment errors, region checks, and account safety.
 
 [![Node.js >= 18](https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=flat-square)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/Web%20Tool-GitHub%20Pages-2563eb?style=flat-square)](https://imzyw.github.io/ai-subscription-doctor/)
 
-`ai-subscription-doctor` 是一个面向中文开发者与海外 AI 工具用户的纯本地只读诊断工具与排查百科。它不收集任何 API Key、邮箱密码或浏览器 Cookie，仅在本地检测当前代理分流连通性、DNS 归属地、系统时间偏差，并提供 2026 年全平台支付与风控报错代码离线速查。
+`ai-subscription-doctor` 是一个面向中文开发者与海外 AI 工具用户的纯本地只读诊断工具、代理防封分流规则生成器与排障百科。它不收集任何 API Key、邮箱密码或浏览器 Cookie，仅在本地检测当前代理分流连通性、DNS 归属地、系统时间偏差，一键生成防 403 / 拒付的完整分流规则片段，并提供 2026 年全平台 57 条支付与风控报错代码离线秒查。
 
 ---
 
-## 快速开始（CLI）
+## 🌐 在线免费工具箱（免安装即用）
 
-无需全局安装，确保本地已安装 Node.js 18+ 即可运行：
+无需下载安装 Node.js，直接访问纯静态无依赖的 GitHub Pages 网页版工具：
+
+👉 **[https://imzyw.github.io/ai-subscription-doctor/](https://imzyw.github.io/ai-subscription-doctor/)**
+
+### 三大实用能力一览
+1. **Clash / Mihomo / Shadowrocket AI 防封分流规则一键生成器**：支持 OpenAI / ChatGPT / Codex、Stripe 支付网关、Google Gemini、Claude、Grok 分流勾选与策略组自定义导出，彻底解决 `pay.openai.com` / `auth.openai.com` / `checkout.stripe.com` 漏分流导致的 403 与发卡行拒付。
+2. **57 条 AI 订阅支付与风控报错离线秒查**：内置全平台完整排查库，支持检索 `OR-REH-04`、`Your card was declined`、`Codex 手机号`、`403`、`升级按钮变灰`、`3DS 验证`，点击展开根因与避坑红线。
+3. **2026 订阅档位官方倍率与成本速算器**：准确反映官方 ChatGPT Plus（标准 1x）、Pro 100（10x）、Pro 200（20x 极速）、Pro 500（50x 顶格算力破除 5 小时限制）档位对比，测算自申虚拟卡隐性开销与风控风险。
+
+---
+
+> ### 💡 懒得折腾外卡与虚拟卡？无需外卡，2 分钟支付宝/微信自助充值自己 ChatGPT Plus 账号（不交密码、稳定不封号）
+> 
+> 如果你不想承受海外虚拟信用卡的高额开卡费（$5-$10/张）、充值手续费（3%-6%）、频发的 Stripe 拒付扣罚或卡段被封资金沉淀风险，可直接使用正规官方代付收银台：
+> - **核心优势**：支持支付宝 / 微信 / USDT · 无需外币信用卡 · 无需交出账号密码 · 官方正规代付无黑卡拒付风险 · 2 分钟全自动发货与查单
+> - **热门服务**：ChatGPT Plus ¥158 | Go ¥59 | Pro 100 (10x) ¥758 | Pro 200 (20x) ¥1,228 | Pro 500 (50x) ¥3,580 | Codex 额度包 | 美区实卡 Codex 手机接码验证 ¥2.2 起（纯正实体卡号段，彻底解决收不到验证码）
+> - **自助收银与避坑导航**：
+>   - 🛒 [ChatGPT 正规自助充值收银台](https://gpt.gptyw.pro/?utm_source=github&utm_medium=readme&utm_campaign=ai-subscription-doctor)
+>   - 📖 [2026 订阅防封与售后避坑指南](https://gptyw.pro/guide.html)
+>   - ⚡ [在线报错急救秒查与比价雷达](https://gpt.imzyw.com/)
+
+---
+
+## 快速开始（本地 CLI 方式）
+
+确保本地已安装 Node.js 18+ 即可运行：
 
 ```bash
 git clone https://github.com/imzyw/ai-subscription-doctor.git
 cd ai-subscription-doctor
 
-# 1. 本地网络与支付网关连通性只读体检
+# 1. 本地网络与支付网关连通性只读体检（零凭据、纯只读）
 node bin/doctor.mjs check
 
-# 2. 离线速查指定报错代码或关键词
+# 2. 离线速查指定报错代码或关键词（内置 57 条报错库）
 node bin/doctor.mjs lookup OR-REH-04
 node bin/doctor.mjs lookup "Your card was declined"
 node bin/doctor.mjs lookup "Codex 手机号"
@@ -86,13 +112,13 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 
 ## 专题文档索引
 
+- [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
 - [Codex / ChatGPT 桌面端手机验证收不到码深度排查](./docs/chatgpt-codex-phone-verification.md)
 - [2026 全平台 AI 订阅支付与风控报错百科](./docs/payment-error-codes-2026.md)
 - [飞书（Lark）公开维基导出排版稿](./docs/lark-wiki-export.md)
 
 ---
 
-## 在线工具与实测参考
+## 开源协议与声明
 
-- 在线报错急救秒查器与实时比价雷达：[https://gpt.imzyw.com/](https://gpt.imzyw.com/)
-- 2026 购买与售后通用参考指南：[https://gptyw.pro/guide.html](https://gptyw.pro/guide.html)
+本项目基于 [MIT License](LICENSE) 纯开源维护，仅供网络诊断与开发交流，不修改任何官方网站数据。

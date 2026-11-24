@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 订阅医生 (AI Subscription Doctor) - 免费防封分流规则与风控报错秒查工具箱</title>
+  <meta name="description" content="面向 AI 开发者的免费极简诊断工具箱：Clash/Shadowrocket AI 防封分流规则一键生成、57 条 AI 订阅支付与风控报错离线秒查、2026 订阅档位倍率与成本速算。">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #10b981;
+      --accent-light: #ecfdf5;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --code-bg: #f1f5f9;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 24px 16px 80px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 24px 0 16px;
+    }
+    .badge-bar {
+      display: inline-flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--card-bg);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .tool-section {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .tool-section.active { display: block; }
+    .tool-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #334155;
+    }
+    .input-text {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text-main);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-text:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .checkbox-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fafafa;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .checkbox-card:hover { background: #f1f5f9; }
+    .checkbox-card input { margin-top: 3px; }
+    .checkbox-card .title { font-size: 13px; font-weight: 600; color: #1e293b; }
+    .checkbox-card .desc { font-size: 11px; color: #64748b; line-height: 1.3; margin-top: 2px; }
+
+    /* Code Box & Actions */
+    .code-container {
+      position: relative;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-x: auto;
+      max-height: 380px;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+    /* Search & Results */
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .tag-btn {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tag-btn:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+    }
+    .error-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .error-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #fff;
+      transition: border 0.15s;
+    }
+    .error-item:hover { border-color: #cbd5e1; }
+    .error-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .error-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .error-code {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 700;
+      color: #1e293b;
+      font-size: 14px;
+    }
+    .error-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .error-tag-high { background: #fee2e2; color: #991b1b; }
+    .error-tag-med { background: #fef3c7; color: #92400e; }
+    .error-body {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: #334155;
+    }
+    .error-field { margin-bottom: 8px; }
+    .error-field strong { color: #0f172a; }
+    .error-field ol, .error-field ul { padding-left: 20px; margin-top: 4px; }
+
+    /* Calculator Styles */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .calc-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #f8fafc;
+      position: relative;
+    }
+    .calc-card.highlight {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .calc-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .calc-rate {
+      font-size: 12px;
+      color: #2563eb;
+      font-weight: 600;
+      background: #dbeafe;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .calc-price {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 8px 0;
+    }
+    .calc-price small { font-size: 13px; font-weight: normal; color: var(--text-muted); }
+    .calc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+    /* Promotion Banner / Card */
+    .promo-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-md);
+      margin-top: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-card::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(0,0,0,0) 70%);
+      border-radius: 50%;
+    }
+    .promo-badge {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .promo-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      color: #f8fafc;
+    }
+    .promo-subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .promo-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .promo-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+    .promo-feature-item svg {
+      width: 16px;
+      height: 16px;
+      fill: #10b981;
+      flex-shrink: 0;
+    }
+    .promo-prices {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+    .promo-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #3b82f6;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    footer a { color: var(--text-muted); text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="badge-bar">
+      <span class="badge badge-blue">2026 AI 订阅开源医生箱</span>
+      <span class="badge badge-green">纯本地只读 · 零外部依赖</span>
+      <span class="badge">GitHub Pages 纯静态</span>
+    </div>
+    <h1>AI 订阅医生 (Subscription Doctor)</h1>
+    <p class="subtitle">
+      专为中国开发者与海外 AI 工具用户打造的防封与排障工具箱。一键生成全平台代理分流规则，秒查 57 条支付风控报错，精确测算 2026 订阅档位官方倍率与实际开销。
+    </p>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('rule-gen')">① 分流规则一键生成</button>
+    <button class="tab-btn" onclick="switchTab('error-search')">② 57 条风控报错秒查</button>
+    <button class="tab-btn" onclick="switchTab('calc')">③ 订阅倍率与成本速算</button>
+  </nav>
+
+  <!-- 工具 1: 分流规则生成器 -->
+  <section id="rule-gen" class="tool-section active">
+    <div class="tool-title">
+      <span>🛡️ Clash / Mihomo / Shadowrocket AI 防封分流规则一键生成器</span>
+    </div>
+    <p class="tool-desc">
+      很多人遇到 <code>pay.openai.com</code> 403 拒付或 <code>auth.openai.com</code> 循环登录，根因是规则漏掉了登录与 Stripe 支付网关域名，导致被直连或非支持区代理阻断。勾选平台与策略组，一键导出完整无死角防封规则。
+    </p>
+
+    <div class="form-group">
+      <label class="form-label">勾选需要防封分流的 AI 服务平台：</label>
+      <div class="checkbox-grid">
+        <label class="checkbox-card">
+          <input type="checkbox" id="cb-openai" checked onchange="generateRules()">
+          <div>
+            <div class="title">OpenAI / ChatGPT / Codex</div>
+            <div class="desc">包含 chatgpt.com, auth/pay, oaistatic, oaiusercontent</div>
+          </div>
+        </label>
+        <label class="checkbox-card">
+          <input type="checkbox" id="cb-stripe" checked onchange="generateRules()">
+          <div>
+            <div class="title">Stripe 支付网关（必选防拒付）</div>
+            <div class="desc">包含 stripe.com, *.stripe.network, 3DS 验证</div>
+          </div>
+        </label>
+        <label class="checkbox-card">
+          <input type="checkbox" id="cb-google" checked onchange="generateRules()">
+          <div>
+            <div class="title">Google / Gemini / Antigravity</div>
+            <div class="desc">包含 gemini.google.com, generativelanguage, one.google</div>
+          </div>
+        </label>
+        <label class="checkbox-card">
+          <input type="checkbox" id="cb-claude" checked onchange="generateRules()">
+          <div>
+            <div class="title">Claude / Anthropic</div>
+            <div class="desc">包含 claude.ai, anthropic.com, statsig, cdn</div>
+          </div>
+        </label>
+        <label class="checkbox-card">
+          <input type="checkbox" id="cb-grok" checked onchange="generateRules()">
+          <div>
+            <div class="title">Grok / xAI</div>
+            <div class="desc">包含 grok.com, x.ai, api.x.ai</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+      <div class="form-group">
+        <label class="form-label" for="group-name">分流策略组名称 (Proxy Group Name):</label>
+        <input type="text" id="group-name" class="input-text" value="AI-US" oninput="generateRules()" placeholder="例如: AI-US / 节点选择 / PROXY">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="rule-format">输出规则格式:</label>
+        <select id="rule-format" class="input-text" onchange="generateRules()">
+          <option value="clash">Clash / Mihomo (YAML)</option>
+          <option value="shadowrocket">Shadowrocket / Quantumult X</option>
+          <option value="surge">Surge (DOMAIN-SUFFIX / KEYWORD)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="code-container">
+      <button class="copy-btn" onclick="copyCode('rules-code')">一键复制规则片段</button>
+      <pre id="rules-code">正在生成...</pre>
+    </div>
+  </section>
+
+  <!-- 工具 2: 57 条风控报错离线秒查器 -->
+  <section id="error-search" class="tool-section">
+    <div class="tool-title">
+      <span>🔍 57 条 AI 订阅支付与风控报错离线秒查器</span>
+    </div>
+    <p class="tool-desc">
+      本地离线完整内置 57 种支付被拒、Google OR 报错、OpenAI 403、Codex 手机验证失败原因。输入错误码或关键词，即刻展开根因剖析与避坑红线。
+    </p>
+
+    <div class="form-group">
+      <input type="text" id="error-input" class="input-text" placeholder="搜错误码如 OR-REH-04、Your card was declined、403、Codex 手机号、灰色按钮..." oninput="filterErrors()">
+      <div class="quick-tags">
+        <span style="font-size: 12px; color: var(--text-muted); line-height: 24px;">高频痛点快速检索：</span>
+        <button class="tag-btn" onclick="setQuery('Your card was declined')">Your card was declined</button>
+        <button class="tag-btn" onclick="setQuery('OR-REH-04')">OR-REH-04 (Google)</button>
+        <button class="tag-btn" onclick="setQuery('Codex 手机号')">Codex 手机号验证</button>
+        <button class="tag-btn" onclick="setQuery('403')">403 地域受限</button>
+        <button class="tag-btn" onclick="setQuery('升级按钮灰色')">升级按钮灰色</button>
+        <button class="tag-btn" onclick="setQuery('3DS')">3DS 验证失败</button>
+      </div>
+    </div>
+
+    <div id="error-results-count" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;"></div>
+    <div class="error-list" id="error-list"></div>
+  </section>
+
+  <!-- 工具 3: 订阅档位与成本速算器 -->
+  <section id="calc" class="tool-section">
+    <div class="tool-title">
+      <span>⚡ 2026 AI 订阅档位真实倍率与成本速算器</span>
+    </div>
+    <p class="tool-desc">
+      准确体现 2026 年 OpenAI 官方倍率梯度及开通成本对比。外币卡自付存在高昂汇率损耗、虚拟卡开卡费（通常 $5-$10/张）与充值手续费（3%-5%），若遭风控还面临余额吞没风险。
+    </p>
+
+    <div class="calc-grid">
+      <div class="calc-card">
+        <div class="calc-card-title">
+          <span>ChatGPT Plus</span>
+          <span class="calc-rate">标准 1x</span>
+        </div>
+        <div class="calc-price">$20 <small>/ 月</small></div>
+        <div class="calc-desc">
+          标准 GPT-4o / o1 / Canvas / 联网搜索无限会话配额。日常办公、翻译、写稿核心主力。
+        </div>
+      </div>
+
+      <div class="calc-card highlight">
+        <div class="calc-card-title">
+          <span>ChatGPT Pro 100</span>
+          <span class="calc-rate">10x 高算力</span>
+        </div>
+        <div class="calc-price">$100 <small>/ 月</small></div>
+        <div class="calc-desc">
+          10 倍 GPT-4o / o1 配额，支持长上下文深度推理与复杂项目分析。专业开发者高性价比之选。
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-card-title">
+          <span>ChatGPT Pro 200</span>
+          <span class="calc-rate">20x 极速</span>
+        </div>
+        <div class="calc-price">$200 <small>/ 月</small></div>
+        <div class="calc-desc">
+          20 倍配额 + 官方 o1-pro 极限思考模式独占支持。高强度专业开发与系统架构师标准配属。
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-card-title">
+          <span>ChatGPT Pro 500</span>
+          <span class="calc-rate">50x 顶格算力</span>
+        </div>
+        <div class="calc-price">$500 <small>/ 月</small></div>
+        <div class="calc-desc">
+          50 倍顶格超大配额，彻底破除 5 小时次数上限。多项目并行团队、独立黑客生产力引擎。
+        </div>
+      </div>
+    </div>
+
+    <div style="background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; color: #334155;">
+      <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px;">💡 为什么自申海外虚拟信用卡总成本更高？</div>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>固定隐性开销</strong>：开卡费约 ¥35-70，USDT 入金网络手续费 + 充值磨损约 3%~6%；</li>
+        <li><strong>拒付风控扣罚</strong>：部分虚拟卡平台每发生 1 次 Stripe 拒付扣取 $0.5~$1.0 罚金；</li>
+        <li><strong>资产冻结风险</strong>：卡段若遭 OpenAI 批量封禁，虚拟卡账户内沉淀的资金极难提现退回。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 推广说明卡片（按 OWNER 要求简单易懂直击痛点） -->
+  <div class="promo-card">
+    <span class="promo-badge">官方正规通道 · 充自己账号</span>
+    <h2 class="promo-title">不想折腾海外信用卡或虚拟卡？无需外卡，2 分钟自助充自己 ChatGPT Plus 账号</h2>
+    <p class="promo-subtitle">
+      支持支付宝 / 微信 / USDT · 无需外币信用卡 · 无需交出账号密码 · 官方正规代付无黑卡拒付风险
+    </p>
+
+    <div class="promo-features">
+      <div class="promo-feature-item">
+        <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        <span>无需交出账号与密码</span>
+      </div>
+      <div class="promo-feature-item">
+        <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        <span>国内支付宝 / 微信秒付</span>
+      </div>
+      <div class="promo-feature-item">
+        <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        <span>正规卡代付 · 告别拒付封号</span>
+      </div>
+      <div class="promo-feature-item">
+        <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        <span>2 分钟全自动发货 / 查单</span>
+      </div>
+    </div>
+
+    <div class="promo-prices">
+      <strong>热门服务支持：</strong><br>
+      • <strong>ChatGPT 订阅：</strong>Plus ¥158 | Go ¥59 | Pro 100 (10x) ¥758 | Pro 200 (20x) ¥1,228 | Pro 500 (50x) ¥3,580<br>
+      • <strong>开发者专属：</strong>Codex 额度包 | 美区实卡 Codex 手机接码验证 ¥2.2 起（纯正实体卡号段，彻底解决收不到验证码）
+    </div>
+
+    <div class="promo-actions">
+      <a href="https://gpt.gptyw.pro/?utm_source=github&utm_medium=webtool&utm_campaign=ai-subscription-doctor" target="_blank" class="btn-primary">
+        直达 ChatGPT 自助收银台 &rarr;
+      </a>
+      <a href="https://gptyw.pro/guide.html" target="_blank" class="btn-secondary">
+        查阅 2026 订阅防封与售后避坑指南
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      ai-subscription-doctor 是完全免费、开源的排障知识库。
+      <br>
+      项目基于 MIT 协议开源于 <a href="https://github.com/imzyw/ai-subscription-doctor" target="_blank">GitHub</a> · 不索取任何账号密码与敏感数据
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // 内嵌 57 条报错数据
+  const ERROR_CODES_DATA = [
+  {
+    "id": "or-reh-04",
+    "code": "OR-REH-04",
+    "platform": "Google / Gemini",
+    "category": "payment",
+    "title": "Google Play 支付报错 OR-REH-04",
+    "keywords": [
+      "OR-REH-04",
+      "无法完成交易",
+      "Google Play 拒付"
+    ],
+    "severity": "high",
+    "cause": "付款需要额外资料或验证，具体要求以 Google 付款中心和通知为准。",
+    "steps": [
+      "进入 Google 付款中心查看提醒。",
+      "补交要求的资料，或携带错误码联系 Google 支持。"
+    ],
+    "avoid": [
+      "避免反复提交同一笔付款。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-REH-04",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "or-ccseh-05",
+    "code": "OR-CCSEH-05",
+    "platform": "Google Play",
+    "category": "payment",
+    "title": "Google Play 付款遭拒",
+    "keywords": [
+      "OR-CCSEH-05",
+      "交易被拒绝",
+      "transaction declined"
+    ],
+    "severity": "high",
+    "cause": "付款方式可能未获授权，或 Google 付款资料有待核对。",
+    "steps": [
+      "检查 Google 付款中心提醒与账单资料。",
+      "向发卡行核实这笔交易的授权结果。"
+    ],
+    "avoid": [
+      "避免向非官方客服提交卡片信息。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-CCSEH-05",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "or-ccseh-22",
+    "code": "OR-CCSEH-22",
+    "platform": "Google Play",
+    "category": "payment",
+    "title": "发卡机构拒绝 Google Play 付款",
+    "keywords": [
+      "OR-CCSEH-22",
+      "issuer declined",
+      "银行卡拒付"
+    ],
+    "severity": "high",
+    "cause": "发卡方拒绝授权，可能涉及线上或跨境支付权限。",
+    "steps": [
+      "检查额度与跨境支付设置。",
+      "向发卡行提供交易时间与商户名称。"
+    ],
+    "avoid": [
+      "避免立即重复扣款。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-CCSEH-22",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "or-hdt-14",
+    "code": "OR-HDT-14",
+    "platform": "Google Play",
+    "category": "payment",
+    "title": "Google Play 要求更正卡信息",
+    "keywords": [
+      "OR-HDT-14",
+      "correct this card info",
+      "卡信息错误"
+    ],
+    "severity": "medium",
+    "cause": "账单地址或卡片资料可能与发卡行记录不一致。",
+    "steps": [
+      "检查卡片有效期与账单邮编。",
+      "如卡片过期，更新付款方式。"
+    ],
+    "avoid": [
+      "避免把完整卡号贴到群聊。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-HDT-14",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "or-ccreu-01",
+    "code": "OR_CCREU_01",
+    "platform": "Google Play",
+    "category": "payment",
+    "title": "Google Play 提示付款方式无效",
+    "keywords": [
+      "OR_CCREU_01",
+      "invalid payment method",
+      "付款方式无效"
+    ],
+    "severity": "medium",
+    "cause": "Google 可能无法使用该付款方式处理本次订单。",
+    "steps": [
+      "检查付款资料和对应渠道的支持范围。",
+      "如发卡行确认无法授权，使用另一种官方支持的付款方式。"
+    ],
+    "avoid": [
+      "避免填写虚假账单信息。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR_CCREU_01",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "card-declined",
+    "code": "card_declined",
+    "platform": "ChatGPT / OpenAI",
+    "category": "payment",
+    "title": "ChatGPT 信用卡付款被拒",
+    "keywords": [
+      "card_declined",
+      "card declined",
+      "银行卡被拒",
+      "信用卡被拒"
+    ],
+    "severity": "high",
+    "cause": "发卡行、付款认证或地区支持条件都可能导致拒绝。",
+    "steps": [
+      "核对账单地址与银行认证窗口。",
+      "查询订阅状态，再向银行核实授权结果。"
+    ],
+    "avoid": [
+      "避免提供完整卡号或验证码。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=card_declined",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "something-went-wrong",
+    "code": "Something went wrong",
+    "platform": "ChatGPT",
+    "category": "network",
+    "title": "ChatGPT 页面出现通用错误",
+    "keywords": [
+      "Something went wrong",
+      "出了点问题",
+      "发生错误"
+    ],
+    "severity": "medium",
+    "cause": "浏览器会话、扩展或服务故障都可能触发通用错误。",
+    "steps": [
+      "先查看官方服务状态。",
+      "保存当前输入，再用无扩展的浏览器窗口测试。"
+    ],
+    "avoid": [
+      "避免在仍有未保存内容时清理会话。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Something%20went%20wrong",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "invalid-api-key",
+    "code": "invalid_api_key",
+    "platform": "OpenAI API",
+    "category": "authentication",
+    "title": "OpenAI API 401 密钥无效",
+    "keywords": [
+      "invalid_api_key",
+      "incorrect api key",
+      "API 密钥无效",
+      "401"
+    ],
+    "severity": "high",
+    "cause": "请求使用了无效、已撤销或错误项目的 API 密钥。",
+    "steps": [
+      "确认项目与凭据来源。",
+      "若密钥已泄露，通过控制台撤销并重新生成。"
+    ],
+    "avoid": [
+      "避免在日志中输出密钥。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=invalid_api_key",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "insufficient-quota",
+    "code": "insufficient_quota",
+    "platform": "OpenAI API",
+    "category": "quota",
+    "title": "OpenAI API 429 额度不足",
+    "keywords": [
+      "insufficient_quota",
+      "exceeded your current quota",
+      "额度不足",
+      "429"
+    ],
+    "severity": "medium",
+    "cause": "API 项目可用额度不足，或触及支出限制。",
+    "steps": [
+      "核对 API 组织和项目的账单。",
+      "确认新额度生效以后再试。"
+    ],
+    "avoid": [
+      "避免通过持续重试解决额度不足。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=insufficient_quota",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "rate-limit-exceeded",
+    "code": "rate_limit_exceeded",
+    "platform": "OpenAI API",
+    "category": "quota",
+    "title": "OpenAI API 429 请求速率受限",
+    "keywords": [
+      "rate_limit_exceeded",
+      "rate limit reached",
+      "请求太频繁",
+      "429"
+    ],
+    "severity": "medium",
+    "cause": "请求或令牌吞吐量达到项目与模型的限制。",
+    "steps": [
+      "读取限速响应头。",
+      "降低并发并按退避策略重试。"
+    ],
+    "avoid": [
+      "避免多个工作线程同时立即重试。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=rate_limit_exceeded",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "unsupported-country-region-territory",
+    "code": "unsupported_country_region_territory",
+    "platform": "ChatGPT / OpenAI",
+    "category": "region",
+    "title": "OpenAI 403 地区提示",
+    "keywords": [
+      "unsupported_country_region_territory",
+      "country region territory not supported",
+      "地区不支持",
+      "403"
+    ],
+    "severity": "high",
+    "cause": "服务判断请求来自当前不支持的地区。",
+    "steps": [
+      "核对产品官方支持范围。",
+      "若身处支持地区，联系官方支持确认。"
+    ],
+    "avoid": [
+      "避免提交与实际情况不符的账户资料。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=unsupported_country_region_territory",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "sandbox-error",
+    "code": "sandbox_error",
+    "platform": "Codex",
+    "category": "environment",
+    "title": "Codex 执行环境报错",
+    "keywords": [
+      "sandbox_error",
+      "sandbox error",
+      "沙箱错误",
+      "permission denied"
+    ],
+    "severity": "medium",
+    "cause": "执行环境配置或与远程沙箱的连接可能异常。",
+    "steps": [
+      "检查工作目录权限和依赖可用性。",
+      "记录执行阶段与错误号，修正配置后再试。"
+    ],
+    "avoid": [
+      "避免为排查而全局放开目录权限。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=sandbox_error",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "authentication-error",
+    "code": "authentication_error",
+    "platform": "Codex",
+    "category": "authentication",
+    "title": "Codex 认证失败",
+    "keywords": [
+      "authentication_error",
+      "authentication error",
+      "认证失败",
+      "登录过期"
+    ],
+    "severity": "high",
+    "cause": "当前会话或项目凭据无法验证。",
+    "steps": [
+      "确认使用预期的登录方式。",
+      "从 Codex 官方入口重新认证。"
+    ],
+    "avoid": [
+      "避免复制登录令牌到工单。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=authentication_error",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "failed-precondition",
+    "code": "FAILED_PRECONDITION",
+    "platform": "Google / Gemini",
+    "category": "region",
+    "title": "Gemini API 400 前置条件不满足",
+    "keywords": [
+      "FAILED_PRECONDITION",
+      "failed precondition",
+      "free tier is not available",
+      "免费层不可用"
+    ],
+    "severity": "medium",
+    "cause": "免费层可能在当前地区不可用，或项目尚未满足请求前置条件。",
+    "steps": [
+      "阅读响应中的具体条件。",
+      "查看项目计费状态和官方可用地区。"
+    ],
+    "avoid": [
+      "避免盲目更换密钥。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=FAILED_PRECONDITION",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "resource-exhausted",
+    "code": "RESOURCE_EXHAUSTED",
+    "platform": "Google / Gemini",
+    "category": "quota",
+    "title": "Gemini API 429 资源耗尽",
+    "keywords": [
+      "RESOURCE_EXHAUSTED",
+      "resource exhausted",
+      "限额",
+      "429"
+    ],
+    "severity": "medium",
+    "cause": "项目触及调用速率、令牌或配额上限。",
+    "steps": [
+      "在 AI Studio 检查此项目及模型的配额。",
+      "根据触及的限制降低请求速率或等待恢复。"
+    ],
+    "avoid": [
+      "避免并行重试放大流量。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=RESOURCE_EXHAUSTED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "unavailable",
+    "code": "UNAVAILABLE",
+    "platform": "Google / Gemini",
+    "category": "network",
+    "title": "Gemini API 503 暂不可用",
+    "keywords": [
+      "UNAVAILABLE",
+      "service unavailable",
+      "模型过载",
+      "503"
+    ],
+    "severity": "medium",
+    "cause": "模型服务暂时过载或不可用。",
+    "steps": [
+      "查询服务状态。",
+      "用有限次数的指数退避重试。"
+    ],
+    "avoid": [
+      "避免把 503 当作付款失败。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=UNAVAILABLE",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "permission-denied",
+    "code": "PERMISSION_DENIED",
+    "platform": "Google / Gemini",
+    "category": "authentication",
+    "title": "Gemini API 403 无权访问",
+    "keywords": [
+      "PERMISSION_DENIED",
+      "permission denied",
+      "权限不足",
+      "403"
+    ],
+    "severity": "high",
+    "cause": "密钥限制、项目权限或所选资源可能不匹配。",
+    "steps": [
+      "确认项目与密钥限制。",
+      "查看目标 API 或模型的访问权限。"
+    ],
+    "avoid": [
+      "避免为临时排查移除全部限制。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=PERMISSION_DENIED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "overloaded-error",
+    "code": "overloaded_error",
+    "platform": "Claude / Anthropic",
+    "category": "network",
+    "title": "Claude API 529 服务过载",
+    "keywords": [
+      "overloaded_error",
+      "overloaded",
+      "服务繁忙",
+      "529"
+    ],
+    "severity": "medium",
+    "cause": "服务暂时无法接受更多负载。",
+    "steps": [
+      "查询 Claude 服务状态。",
+      "降低并发并有限次退避重试。"
+    ],
+    "avoid": [
+      "避免让失败请求无限重试。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=overloaded_error",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "request-too-large",
+    "code": "request_too_large",
+    "platform": "Claude / Anthropic",
+    "category": "request",
+    "title": "Claude API 413 请求过大",
+    "keywords": [
+      "request_too_large",
+      "request too large",
+      "上传过大",
+      "413"
+    ],
+    "severity": "medium",
+    "cause": "请求体超过端点允许的字节大小。",
+    "steps": [
+      "测量编码后的请求大小。",
+      "拆分文档或减少内联附件。"
+    ],
+    "avoid": [
+      "避免原样重试同一负载。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=request_too_large",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "rate-limit-error",
+    "code": "rate_limit_error",
+    "platform": "Claude / Anthropic",
+    "category": "quota",
+    "title": "Claude API 429 限速",
+    "keywords": [
+      "rate_limit_error",
+      "rate limit",
+      "调用过频",
+      "429"
+    ],
+    "severity": "medium",
+    "cause": "组织或模型触及速率限制。",
+    "steps": [
+      "读取 Retry-After 和限速相关响应头。",
+      "降低并发并分批处理。"
+    ],
+    "avoid": [
+      "避免短时提高并发来补偿失败。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=rate_limit_error",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "xai-429-too-many-requests",
+    "code": "429 Too Many Requests",
+    "platform": "Grok / xAI",
+    "category": "quota",
+    "title": "xAI API 429 请求过多",
+    "keywords": [
+      "429 Too Many Requests",
+      "too many requests",
+      "请求过多",
+      "429"
+    ],
+    "severity": "medium",
+    "cause": "团队触及模型的请求或令牌限速。",
+    "steps": [
+      "检查 xAI Console 中的团队与模型限额。",
+      "降低并发后再试。"
+    ],
+    "avoid": [
+      "避免共享密钥进行多端并发补偿。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=429%20Too%20Many%20Requests",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "xai-403-forbidden",
+    "code": "403 Forbidden",
+    "platform": "Grok / xAI",
+    "category": "authentication",
+    "title": "xAI API 403 拒绝访问",
+    "keywords": [
+      "403 Forbidden",
+      "forbidden",
+      "访问被拒",
+      "403"
+    ],
+    "severity": "high",
+    "cause": "API 凭据可能缺少访问目标资源的权限。",
+    "steps": [
+      "确认请求所用团队和授权范围。",
+      "查看错误详情并核实目标模型的权限。"
+    ],
+    "avoid": [
+      "避免在排查中公开密钥。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=403%20Forbidden",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "apple-verification-required",
+    "code": "Verification Required",
+    "platform": "Apple / App Store",
+    "category": "payment",
+    "title": "App Store 要求验证付款",
+    "keywords": [
+      "Verification Required",
+      "verification required",
+      "需要验证",
+      "账单问题"
+    ],
+    "severity": "high",
+    "cause": "之前的购买可能存在未结清余额。",
+    "steps": [
+      "在购买历史里核对未付款订单。",
+      "更新有效的付款方式并处理待付余额。"
+    ],
+    "avoid": [
+      "避免将 Apple 账户验证码交给第三方。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Verification%20Required",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "apple-your-payment-method-was-declined",
+    "code": "Your payment method was declined",
+    "platform": "Apple / App Store",
+    "category": "payment",
+    "title": "Apple 付款方式被拒绝",
+    "keywords": [
+      "Your payment method was declined",
+      "payment method was declined",
+      "苹果付款被拒"
+    ],
+    "severity": "high",
+    "cause": "付款方式可能被发卡行拒绝或存在未付款订单。",
+    "steps": [
+      "在付款与配送设置内检查付款方式。",
+      "核对未付余额并咨询发卡行。"
+    ],
+    "avoid": [
+      "避免重复操作未知状态的订单。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Your%20payment%20method%20was%20declined",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "codex-phone-sms-missing",
+    "code": "PHONE_VERIFY_NO_SMS",
+    "platform": "ChatGPT / Codex",
+    "category": "账号验证",
+    "title": "Codex / ChatGPT 桌面端要求验证手机号收不到验证码",
+    "keywords": [
+      "Codex",
+      "手机号",
+      "收不到验证码",
+      "桌面端",
+      "VOIP",
+      "实体卡"
+    ],
+    "severity": "high",
+    "cause": "OpenAI 对新注册或风控环境触发短信二次验证，且屏蔽虚拟号段（VOIP / Google Voice / 在线免费接码池），同时部分国内运营商号段被网关延迟或拦截。",
+    "steps": [
+      "停止在 10 分钟内重复点击发送验证码，避免触发 24 小时冷却。",
+      "确认当前网络节点与账号常用登录地区一致（例如美区账号使用稳定美国住宅或纯净机房 IP）。",
+      "改用对应国家的实体 SIM 卡号段接码（如美国实体卡低至 ¥2.2–¥3.5 级方案），避免使用已被滥用的公共接码平台。",
+      "若用于 Codex CLI，完成网页端验证后再执行终端 OAuth 登录。"
+    ],
+    "avoid": [
+      "切勿使用免费网页接码池或频繁切换 5 个以上国家的 IP 重试，否则极易直接升级为 Account deactivated。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=PHONE_VERIFY_NO_SMS",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-your-card-was-declined",
+    "code": "Your card was declined",
+    "platform": "ChatGPT / OpenAI",
+    "category": "支付拦截",
+    "title": "ChatGPT Plus 付款提示 Your card was declined（您的银行卡被拒绝）",
+    "keywords": [
+      "Your card was declined",
+      "银行卡被拒绝",
+      "Stripe",
+      "拒付",
+      "ChatGPT Plus"
+    ],
+    "severity": "high",
+    "cause": "发卡行 BIN 被 Stripe 风控库标记（常见于内地双币卡、部分港卡及高危虚拟卡段），或账单邮编、IP 归属地与发卡行国家三者不一致。",
+    "steps": [
+      "检查浏览器是否开启了无痕模式并关闭了广告拦截插件，避免 Stripe 3DS 弹窗被拦截。",
+      "核对账单地址（Billing Address）中的国家与邮编是否与发卡地严格一致（美区免税州如俄勒冈 97201 仅适用于对应美卡）。",
+      "若连续失败 2 次，立即停止同一张卡重试，间隔 24 小时或改用苹果礼品卡 / 合规官充渠道给自己账号升级。"
+    ],
+    "avoid": [
+      "不要在同一个浏览器会话里连续更换 3 张以上不同的卡硬刷，Stripe 会直接将该账号加入高风险观察名单。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Your card was declined",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-credit-card-declined",
+    "code": "Your credit card was declined",
+    "platform": "ChatGPT / OpenAI",
+    "category": "支付拦截",
+    "title": "订阅提示 Your credit card was declined. Try paying with a debit card instead",
+    "keywords": [
+      "credit card was declined",
+      "debit card",
+      "信用卡被拒",
+      "预付卡",
+      "Stripe"
+    ],
+    "severity": "high",
+    "cause": "OpenAI 结算网关识别到部分预付卡/虚拟信用卡 BIN，或发卡行主动拒绝了境外 AI 订阅商户（MCC 5734/7372）的周期性扣款授权。",
+    "steps": [
+      "联系发卡行确认是否开启了境外无卡交易（CNP）与订阅类商户白名单。",
+      "若使用虚拟卡，确认卡内余额至少大于订阅金额 + 15%（应对 $1 预授权与跨境货币转换冻结）。",
+      "无法通过网页端 Stripe 时，可切换至 iOS App Store 内购或直接走充自己账号官充方案。"
+    ],
+    "avoid": [
+      "不要反复提交同一张已经被明确拒绝的信用卡，连续失败可能触发发卡行锁卡或 OpenAI 账号支付冻结。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Your credit card was declined",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-unable-authenticate-payment",
+    "code": "We are unable to authenticate your payment method",
+    "platform": "ChatGPT / OpenAI",
+    "category": "3DS验证",
+    "title": "提示 We are unable to authenticate your payment method",
+    "keywords": [
+      "unable to authenticate",
+      "3DS",
+      "验证失败",
+      "支付方式",
+      "弹窗被拦截"
+    ],
+    "severity": "high",
+    "cause": "银行要求 3D Secure（3DS）动态验证，但当前网络环境超时、浏览器拦截了银行验证 iframe，或该卡根本不支持 3DS 2.0 校验。",
+    "steps": [
+      "关闭浏览器的广告拦截器（uBlock / AdGuard）与严格隐私追踪防护，刷新结算页。",
+      "确认手机银行 App 或短信能正常接收境外 3DS 验证码，且系统时间已设为自动同步。",
+      "尝试更换桌面端 Chrome 正常窗口，保持单一干净节点完成验证。"
+    ],
+    "avoid": [
+      "在 3DS 验证页面加载一半时切代理节点或刷新页面，会导致验证令牌失效并留下失败记录。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=We are unable to authenticate your payment method",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-or-ccseh-21",
+    "code": "OR-CCSEH-21",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "Google 绑卡或付款报错 OR-CCSEH-21",
+    "keywords": [
+      "OR-CCSEH-21",
+      "Google",
+      "绑卡失败",
+      "Gemini",
+      "付款资料"
+    ],
+    "severity": "high",
+    "cause": "Google 付款中心对当前提交的银行卡触发了发卡行校验异常或卡片已被过多 Google 账号绑定过。",
+    "steps": [
+      "确认该银行卡未在超过 2 个其他 Google 账号上作为付款方式绑定。",
+      "前往 pay.google.com 核实姓名、账单地址格式（使用纯英文拼写，避免特殊符号）。",
+      "如为临时体验 Gemini，可直接使用无需绑卡的 6 个月开通链接方案，避开 Google 绑卡风控。"
+    ],
+    "avoid": [
+      "不要把同一张虚拟卡反复绑定到多个新注册的 Gmail 小号上。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-CCSEH-21",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-or-hdt-01",
+    "code": "OR-HDT-01",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "Google Play 兑换或订阅报错 OR-HDT-01（需要更多信息/地区核验）",
+    "keywords": [
+      "OR-HDT-01",
+      "Google Play",
+      "礼品卡",
+      "地区锁定",
+      "Gemini"
+    ],
+    "severity": "high",
+    "cause": "账号被 Google 标记为高风险跨区操作，常见于使用机房 IP 兑换外区礼品卡或新注册 Gmail 直接大额消费。",
+    "steps": [
+      "停止继续尝试兑换礼品卡，避免余额被冻结在账号内无法消费。",
+      "检查 Google Play 商店设置中的“国家/地区与个人资料”是否已正确锁定目标区。",
+      "使用干净住宅网络环境正常使用该 Gmail 3–7 天后再尝试，或按官方指引提交资料申诉。"
+    ],
+    "avoid": [
+      "报错 OR-HDT-01 后不要再买第二张礼品卡继续往同一个号里充，充进去也大概率无法消费。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-HDT-01",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "chatgpt-upgrade-button-gray",
+    "code": "UPGRADE_BTN_DISABLED",
+    "platform": "ChatGPT / OpenAI",
+    "category": "界面交互",
+    "title": "ChatGPT 升级按钮灰色 / Upgrade button disabled 无法点击",
+    "keywords": [
+      "升级按钮灰色",
+      "Upgrade button disabled",
+      "无法点击",
+      "ChatGPT Plus",
+      "Team"
+    ],
+    "severity": "medium",
+    "cause": "常见原因有四类：账号存在尚未到期的 Apple/Google 订阅尚未取消；网页脚本被插件拦截；账号属于受限组织/Workspace；或当前节点被 Cloudflare 局部限流。",
+    "steps": [
+      "检查左下角 Settings -> Subscription，确认当前是否仍处于旧订阅的宽限期或通过移动端订阅中。",
+      "按 Ctrl+Shift+R（Mac 为 Cmd+Shift+R）强制刷新，或换用浏览器无痕窗口登录。",
+      "关闭翻译插件与广告拦截扩展，重新打开 Upgrade 弹窗。"
+    ],
+    "avoid": [
+      "不要在移动端订阅尚未完全过期时强行在网页端重复购买，容易造成双端扣款或权益覆盖异常。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=UPGRADE_BTN_DISABLED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "hk-mainland-card-failed",
+    "code": "HK_CN_CARD_REJECTED",
+    "platform": "ChatGPT / Claude / Grok",
+    "category": "支付拦截",
+    "title": "香港/内地双币信用卡无法支付 ChatGPT 或 Claude",
+    "keywords": [
+      "香港信用卡",
+      "内地双币卡",
+      "Visa",
+      "Mastercard",
+      "无法支付"
+    ],
+    "severity": "high",
+    "cause": "OpenAI / Anthropic 对中国内地发行的 Visa/Mastercard/银联卡默认不支持直接结算；部分香港银行卡虽支持外币，但因 IP 与发卡地不匹配或银行风控策略同样会被拒。",
+    "steps": [
+      "内地发行的双币信用卡基本无法直接过 OpenAI 网页端 Stripe，建议直接放弃硬刷。",
+      "若使用香港实体银行卡，需确保登录与付款 IP 均在香港，且在银行 App 内已开启境外线上交易限额。",
+      "若港卡依然被拒，建议通过正规充自己账号官充渠道或对应区 Apple 礼品卡完成升级。"
+    ],
+    "avoid": [
+      "不要轻信网上所谓的“改一下邮编就能刷内地卡”的过时教程，多次失败只会污染账号信誉。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=HK_CN_CARD_REJECTED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-403-location-not-supported",
+    "code": "403 User location is not supported",
+    "platform": "ChatGPT / OpenAI",
+    "category": "网络地区",
+    "title": "访问或付款时报错 403 User location is not supported",
+    "keywords": [
+      "403",
+      "location is not supported",
+      "地区不支持",
+      "香港节点",
+      "代理"
+    ],
+    "severity": "high",
+    "cause": "当前出口 IP 归属地位于 OpenAI 不支持服务的地区（例如中国内地、香港、俄罗斯等），或代理分流规则遗漏了 `auth.openai.com` / `pay.openai.com`。",
+    "steps": [
+      "检查代理节点是否误选了香港、澳门或不支持地区，切换至美国、日本、新加坡或台湾等支持区节点。",
+      "确认规则分流模式中已将 `openai.com`、`chatgpt.com`、`oaistatic.com` 与 `stripe.com` 全部走同一节点。",
+      "切换节点后清理 `chatgpt.com` 的浏览器 Cookie 与缓存，重新打开页面。"
+    ],
+    "avoid": [
+      "切勿使用香港节点访问 OpenAI 支付页，香港不在 OpenAI 个人订阅支持区域内。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=403 User location is not supported",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-something-went-wrong-access-denied",
+    "code": "Something went wrong (Access denied)",
+    "platform": "ChatGPT / OpenAI",
+    "category": "网络风控",
+    "title": "登录或结算时提示 Something went wrong / Access denied (1020/1015)",
+    "keywords": [
+      "Something went wrong",
+      "Access denied",
+      "Cloudflare",
+      "1020",
+      "风控"
+    ],
+    "severity": "medium",
+    "cause": "所用共享机场 IP 被大量用户并发请求污染，触发 Cloudflare WAF 拦截或 OpenAI 边缘节点限流。",
+    "steps": [
+      "更换冷门或独享住宅/纯净节点，避免高峰期使用万人共享免费节点。",
+      "关闭浏览器中会修改 User-Agent 或并发抓包的开发者插件。",
+      "若仅在登录回调页报错，尝试先退出所有设备会话后用无痕模式重登。"
+    ],
+    "avoid": [
+      "不要在被拦截后用脚本每 2 秒自动刷新页面，这会触发更长时间的 IP/指纹封锁。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Something went wrong (Access denied)",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-account-deactivated",
+    "code": "Account deactivated",
+    "platform": "ChatGPT / OpenAI",
+    "category": "账号封禁",
+    "title": "账号提示 Your account has been deactivated（封号与申诉）",
+    "keywords": [
+      "Account deactivated",
+      "封号",
+      "申诉",
+      "黑卡",
+      "批量注册"
+    ],
+    "severity": "critical",
+    "cause": "通常由以下原因触发：使用盗刷黑卡或恶意拒付（Chargeback）充值、使用高危接码池批量注册、共享账号给多人高并发调用，或自动化脚本违反使用条款。",
+    "steps": [
+      "检查注册邮箱是否收到 OpenAI 官方的封禁原因邮件。",
+      "如确属误判，通过官方 Help Center 提交工单（说明个人正常使用场景与合法支付来源）。",
+      "同时做好新账号备份与历史对话导出习惯，选择正规官充渠道避免黑卡连坐。"
+    ],
+    "avoid": [
+      "不要在封号后继续用同一张被标记的虚拟卡或同一个高危 IP 段注册新号。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Account deactivated",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-couldnt-verify-country",
+    "code": "Couldn't verify your country",
+    "platform": "Google Play / Gemini",
+    "category": "网络地区",
+    "title": "Google 提示 Couldn't verify your country（无法验证您的国家/地区）",
+    "keywords": [
+      "Couldn't verify your country",
+      "Google 地区不符",
+      "Gemini",
+      "Play 商店"
+    ],
+    "severity": "high",
+    "cause": "Google 账号注册地、Play 商店付款资料国家与当前网络出口 IP 国家不一致，或者开启了混杂多国节点（如账号是美区但走了新加坡节点）。",
+    "steps": [
+      "关闭设备定位模拟干扰，确保全程使用与 Google Play 资料完全一致国家的稳定节点。",
+      "前往 Google Play -> 设置 -> 常规 -> 账号与设备偏好设置，核对当前显示的国家归属。",
+      "如无需折腾跨区锁，可直接选用无需绑卡的 Gemini 开通方案。"
+    ],
+    "avoid": [
+      "Google Play 一年只能正式更改一次国家/地区，切勿随便点“切换到新国家”。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=Couldn't verify your country",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "gemini-edu-no-antigravity",
+    "code": "EDU_NO_ANTIGRAVITY",
+    "platform": "Gemini / Google AI",
+    "category": "权益说明",
+    "title": "Gemini Pro 12 个月教育成品号为什么不能用 Antigravity？",
+    "keywords": [
+      "Gemini 教育号",
+      "Antigravity",
+      "权限限制",
+      "Gemini Pro",
+      "Ultra"
+    ],
+    "severity": "medium",
+    "cause": "教育优惠版成品号的 Workspace/身份授权范围仅包含常规网页端 Gemini Pro 与基础配额，未开通 Antigravity 所需的特定开发者/高阶订阅权限。",
+    "steps": [
+      "购买前先明确使用场景：仅日常问答、写文案、看文档可选 ¥30 的 Gemini Pro 12 个月教育成品号。",
+      "如果工作流强依赖 Antigravity 或高倍算力，请选择支持高阶权限的 Gemini Ultra 5x（¥608）或 Ultra 20x（¥1,185）官充档位。",
+      "也可搭配 Gemini Plus 6 个月开通链接（¥7.5）做轻量体验。"
+    ],
+    "avoid": [
+      "切勿听信模糊宣传把 ¥30 教育号当成全功能 Ultra 号购买，下单前务必核对商品明确标注的限制。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=EDU_NO_ANTIGRAVITY",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "claude-instant-ban",
+    "code": "CLAUDE_ACCOUNT_DISABLED",
+    "platform": "Claude (Anthropic)",
+    "category": "账号封禁",
+    "title": "Claude 账号注册秒封或刚升级就被 Disabled",
+    "keywords": [
+      "Claude",
+      "秒封",
+      "Disabled",
+      "Anthropic",
+      "风控"
+    ],
+    "severity": "critical",
+    "cause": "Anthropic 对非支持地区 IP、廉价共享机房 IP、临时邮箱域名以及跨区接码极为敏感，新号注册或绑卡瞬间即触发自动封禁。",
+    "steps": [
+      "使用干净的欧美住宅 IP（优先美国或英国原生 IP），避免在注册阶段切换节点。",
+      "使用常用海外邮箱（Gmail / Outlook）与干净实体手机号验证，避免使用一次性邮箱或免费接码平台。",
+      "尽量通过 iOS 美区 App Store 内购订阅 Claude Pro，比网页端直接刷卡更稳。"
+    ],
+    "avoid": [
+      "被封的 Claude 邮箱不要立即用同一个 IP 重新注册，大概率再次秒封。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=CLAUDE_ACCOUNT_DISABLED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "grok-payment-failed",
+    "code": "GROK_SUBSCRIPTION_FAILED",
+    "platform": "Grok (xAI)",
+    "category": "支付拦截",
+    "title": "Grok / X Premium 无法订阅付款或提示支付失败",
+    "keywords": [
+      "Grok",
+      "X Premium",
+      "无法订阅",
+      "xAI",
+      "付款失败"
+    ],
+    "severity": "medium",
+    "cause": "X/Grok 网页端 Stripe 拒绝内地卡与高危虚拟卡，且对刚改绑邮箱或刚更换登录地区的 X 账号有短期风控。",
+    "steps": [
+      "先确认 X 账号本身状态正常，无限制提示或待验证邮箱弹窗。",
+      "若网页端绑卡失败，可尝试通过正规官充月卡（如 Grok Plus 官充 ¥63 / ¥77）完成开通。",
+      "开通后重启 App 或重新登录网页端刷新订阅状态。"
+    ],
+    "avoid": [
+      "不要在 X 账号刚换绑手机号或刚改密码的 24 小时内频繁尝试外币刷卡。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=GROK_SUBSCRIPTION_FAILED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "apple-gift-card-failed",
+    "code": "APPLE_REDEEM_OR_PAY_FAIL",
+    "platform": "Apple App Store",
+    "category": "支付拦截",
+    "title": "Apple 礼品卡充值失败或内购提示 Contact iTunes Support",
+    "keywords": [
+      "Apple 礼品卡",
+      "App Store",
+      "Contact iTunes Support",
+      "内购失败",
+      "美区 ID"
+    ],
+    "severity": "high",
+    "cause": "美区 Apple ID 长期未消费突然大额充值礼品卡、购买了来路不明的黑卡礼品卡，或账号未完整填写美区免税州账单地址。",
+    "steps": [
+      "确认礼品卡来源正规，避免低价黑卡导致整个 Apple ID 被永久禁用。",
+      "首次使用美区 ID 内购前，先下载 1–2 个免费 App 并保持正常使用 24 小时。",
+      "如遇 Contact iTunes Support，需联系苹果官方客服人工解除安全锁，或改用网页端官充方案避免资金卡在苹果余额里。"
+    ],
+    "avoid": [
+      "切勿一次性往新注册的美区 Apple ID 充入 $100 以上礼品卡。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=APPLE_REDEEM_OR_PAY_FAIL",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "virtual-card-refund-risk",
+    "code": "VCC_DECLINE_FEE_TRAP",
+    "platform": "虚拟信用卡",
+    "category": "资金损耗",
+    "title": "虚拟信用卡扣费失败、被反复扣 $1 预授权与高额损耗",
+    "keywords": [
+      "虚拟信用卡",
+      "预授权",
+      "损耗",
+      "退款慢",
+      "WildCard"
+    ],
+    "severity": "medium",
+    "cause": "部分虚拟卡平台开卡费+充值手续费+月费叠加后，实际订阅成本远超 ¥175–¥190；且每次 Stripe 扣款失败仍可能产生 $1 预授权冻结或拒付罚款，甚至面临平台跑路风险。",
+    "steps": [
+      "核对真实总成本：开卡费 + 充值汇率差 + 失败手续费，通常已高于直接找合规官充（如 Plus 充自己账号 ¥158）。",
+      "若虚拟卡内仍有余额被冻结，及时联系发卡平台确认预授权释放周期（通常 7–15 个工作日）。",
+      "对高频刚需订阅，优先选择透明标价、无需自己承担开卡与汇率损耗的充自己账号方案。"
+    ],
+    "avoid": [
+      "不要把大额资金长期存放在无牌照的小众虚拟卡平台余额中。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=VCC_DECLINE_FEE_TRAP",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-or-baih-01",
+    "code": "OR-BAIH-01",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "Google 付款报错 OR-BAIH-01（银行卡验证未通过）",
+    "keywords": [
+      "OR-BAIH-01",
+      "Google",
+      "银行卡验证",
+      "Gemini"
+    ],
+    "severity": "medium",
+    "cause": "发卡行拒绝了 Google 的小额验证扣款，或卡片未开启国际在线支付功能。",
+    "steps": [
+      "确认卡内有足够外币余额（建议至少等值 $2 以上用于验证）。",
+      "联系发卡行放行 Google *Services 的验证交易，24 小时后再试。"
+    ],
+    "avoid": [
+      "连续提交错误 CVV 或有效期超过 3 次会直接锁定该卡。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-BAIH-01",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-or-cbat-15",
+    "code": "OR-CBAT-15",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "Google 订阅报错 OR-CBAT-15（账单国家与卡片不匹配）",
+    "keywords": [
+      "OR-CBAT-15",
+      "Google Play",
+      "账单国家",
+      "Gemini"
+    ],
+    "severity": "medium",
+    "cause": "Google 检测到绑定银行卡的 BIN 归属国家与当前 Google Payments Profile 设定的国家不一致。",
+    "steps": [
+      "在 pay.google.com 中删除不匹配的付款资料，重建与银行卡发行国一致的付款资料。",
+      "若无法匹配对应国家卡，可改用免绑卡的 Gemini 开通链接或官充。"
+    ],
+    "avoid": [
+      "不要把日本卡强行填到美国地址下使用。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-CBAT-15",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-or-pmh-02",
+    "code": "OR-PMH-02",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "Google 支付报错 OR-PMH-02（付款方式状态异常）",
+    "keywords": [
+      "OR-PMH-02",
+      "Google",
+      "付款方式",
+      "异常"
+    ],
+    "severity": "medium",
+    "cause": "当前付款方式已被标记过期、挂失，或该付款资料正在接受人工审核。",
+    "steps": [
+      "登录 Google 付款中心查看是否有红色“需要验证”横幅提示。",
+      "如有审核提示，按要求处理或更换全新合规渠道。"
+    ],
+    "avoid": [
+      "审核未结束前不要新建大量子账号重复绑同一张卡。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=OR-PMH-02",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "stripe-link-mismatch",
+    "code": "STRIPE_LINK_REGION_ERR",
+    "platform": "ChatGPT / OpenAI",
+    "category": "支付拦截",
+    "title": "结算页自动登录 Stripe Link 后无法修改国家或付款失败",
+    "keywords": [
+      "Stripe Link",
+      "自动填充",
+      "国家锁定",
+      "ChatGPT"
+    ],
+    "severity": "medium",
+    "cause": "之前用同一邮箱注册过 Stripe Link，系统自动带入了旧的国内手机号或错误国家的默认卡信息。",
+    "steps": [
+      "在结算页点击邮箱旁边的切换/退出 Link 按钮，手动重新输入新账单信息。",
+      "或者使用浏览器无痕模式打开结算页，避免 Stripe Link Cookie 自动介入。"
+    ],
+    "avoid": [
+      "不要在保留旧错误地址的 Stripe Link 状态下反复点击 Pay。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=STRIPE_LINK_REGION_ERR",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "codex-cli-oauth-401",
+    "code": "CODEX_OAUTH_401_403",
+    "platform": "ChatGPT / Codex",
+    "category": "账号验证",
+    "title": "Codex CLI 终端登录回调报 401 / 403 或无法连接 localhost",
+    "keywords": [
+      "Codex CLI",
+      "OAuth",
+      "401",
+      "403",
+      "登录失败"
+    ],
+    "severity": "medium",
+    "cause": "终端未走系统代理（缺少 `HTTP_PROXY`/`HTTPS_PROXY` 环境变量），或浏览器与终端使用了不同的网络出口。",
+    "steps": [
+      "在终端执行 `export HTTPS_PROXY=http://127.0.0.1:7890`（替换为你的本地代理端口）后再运行登录命令。",
+      "确保浏览器端已经完成手机号验证与 Plus/Pro/Credits 状态刷新。"
+    ],
+    "avoid": [
+      "不要在未配置终端代理的情况下反复重试登录，容易触发短时频率限制。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=CODEX_OAUTH_401_403",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "codex-credits-insufficient",
+    "code": "CODEX_CREDITS_EXHAUSTED",
+    "platform": "ChatGPT / Codex",
+    "category": "额度不足",
+    "title": "Codex 提示 Credits exhausted / 额度耗尽无法继续执行任务",
+    "keywords": [
+      "Codex",
+      "Credits",
+      "额度耗尽",
+      "250",
+      "1000",
+      "2500"
+    ],
+    "severity": "medium",
+    "cause": "高并发代码重构或长时间云端任务消耗完了当前周期赠送额度，需要额外购买 Codex Credits 额度包。",
+    "steps": [
+      "在 ChatGPT 账号后台查看剩余 Codex Credits 余额。",
+      "按实际开发强度选择 250 额度（¥98）、1000 额度（¥328）或 2500 额度（¥728）官充补充。"
+    ],
+    "avoid": [
+      "不要在任务执行到一半时盲目切号，导致上下文与仓库状态断裂。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=CODEX_CREDITS_EXHAUSTED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "chatgpt-paid-not-credited",
+    "code": "PAID_BUT_FREE_TIER",
+    "platform": "ChatGPT / OpenAI",
+    "category": "到账延迟",
+    "title": "已经扣款成功，但 ChatGPT 页面仍显示 Free 免费版",
+    "keywords": [
+      "已扣款",
+      "未到账",
+      "Free",
+      "Plus 没生效",
+      "苹果内购"
+    ],
+    "severity": "high",
+    "cause": "常见于浏览器本地缓存未刷新、登录了不同邮箱（例如 Google 一键登录与密码登录混用），或 iOS 内购凭证未同步。",
+    "steps": [
+      "彻底退出当前 ChatGPT 会话，使用无痕窗口重新登录并核对右上角邮箱是否与付款邮箱完全一致。",
+      "若是 iOS 端购买，进入 App 设置点击 Restore Purchases（恢复购买）。",
+      "若超过 30 分钟仍未生效，保留扣款账单截图联系对应支付渠道核查。"
+    ],
+    "avoid": [
+      "未核对邮箱和恢复购买前，千万不要重复再付一次钱。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=PAID_BUT_FREE_TIER",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "chatgpt-go-vs-plus-confusion",
+    "code": "TIER_MISMATCH_GO_PLUS",
+    "platform": "ChatGPT / OpenAI",
+    "category": "套餐选型",
+    "title": "分不清 ChatGPT Go、Plus、Pro 100 与 Pro 200 该买哪一档",
+    "keywords": [
+      "ChatGPT Go",
+      "Plus",
+      "Pro 100",
+      "Pro 200",
+      "区别"
+    ],
+    "severity": "low",
+    "cause": "OpenAI 档位细化后，不同档位在并发限额、深度推理次数与 Codex 配额上差异较大，容易买贵或买错。",
+    "steps": [
+      "轻量日常问答选 Go（¥59）；主力全能日常开发/办公选 Plus 充自己账号（¥158）。",
+      "重度编程/高频深度推理选 Pro 100 (5x)（¥758）或旗舰 Pro 200 (20x)（¥1,228）。"
+    ],
+    "avoid": [
+      "不要只看名字买单，先核对自己每天的深度推理和代码生成频率。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=TIER_MISMATCH_GO_PLUS",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "google-family-region-conflict",
+    "code": "FAMILY_GROUP_COUNTRY_ERR",
+    "platform": "Google Play / Gemini",
+    "category": "谷歌风控",
+    "title": "加入或使用 Google One / Gemini 家庭组时提示不同国家无法共享",
+    "keywords": [
+      "家庭组",
+      "不同国家",
+      "Google One",
+      "Gemini"
+    ],
+    "severity": "medium",
+    "cause": "家庭组管理员与成员的 Google Play 国家/地区设置不一致，系统拒绝跨区共享。",
+    "steps": [
+      "检查受邀成员账号的付款资料国家是否与管理员完全一致。",
+      "若成员号已锁死在其他区，建议使用独立干净账号或直接采用成品/官充单人方案。"
+    ],
+    "avoid": [
+      "不要为了进家庭组频繁销毁重建付款资料，容易触发账号风控。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=FAMILY_GROUP_COUNTRY_ERR",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "claude-phone-sms-blocked",
+    "code": "CLAUDE_PHONE_INVALID",
+    "platform": "Claude (Anthropic)",
+    "category": "账号验证",
+    "title": "Claude 注册验证手机号提示 Invalid phone number 或无法发送",
+    "keywords": [
+      "Claude",
+      "手机号",
+      "Invalid phone number",
+      "接码"
+    ],
+    "severity": "high",
+    "cause": "Anthropic 屏蔽了所有已知虚拟号段与低信誉接码段，且要求 IP 地区与验证环境尽量匹配。",
+    "steps": [
+      "避免使用常见免费接码网站。",
+      "确保当前网络环境干净且未被多人共享污染。"
+    ],
+    "avoid": [
+      "同一手机号不要短时间内连续验证多个 Claude 账号。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=CLAUDE_PHONE_INVALID",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "grok-billing-zip-error",
+    "code": "GROK_ZIP_MISMATCH",
+    "platform": "Grok (xAI)",
+    "category": "支付拦截",
+    "title": "Grok 订阅填写账单邮编提示 Postal code is invalid",
+    "keywords": [
+      "Grok",
+      "Postal code",
+      "邮编",
+      "账单地址"
+    ],
+    "severity": "low",
+    "cause": "所选国家与输入的邮编格式不匹配（如美区需要 5 位数字邮编，英区需要字母数字组合）。",
+    "steps": [
+      "核对结算页右上角或下拉框选中的国家是否与卡片账单国家一致。",
+      "按对应国家标准格式填写有效邮编。"
+    ],
+    "avoid": [
+      "不要随意填 000000 或中文字符。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=GROK_ZIP_MISMATCH",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-3ds-timeout",
+    "code": "3DS_CHALLENGE_TIMEOUT",
+    "platform": "ChatGPT / OpenAI",
+    "category": "3DS验证",
+    "title": "银行 3DS 验证短信延迟或 App 确认后页面仍卡死超时",
+    "keywords": [
+      "3DS",
+      "超时",
+      "卡死",
+      "银行确认"
+    ],
+    "severity": "medium",
+    "cause": "代理节点延迟过高或丢包，导致银行验证结果回调给 Stripe 时连接中断。",
+    "steps": [
+      "付款前测试节点到 `api.stripe.com` 的连通性与延迟，确保稳定低丢包。",
+      "在银行 App 确认扣款后耐心等待 15–30 秒，不要提前关闭弹窗。"
+    ],
+    "avoid": [
+      "在等待回调时切勿手动点击浏览器后退。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=3DS_CHALLENGE_TIMEOUT",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-bank-risk-sms",
+    "code": "BANK_FRAUD_BLOCK",
+    "platform": "ChatGPT / Claude / Grok",
+    "category": "支付拦截",
+    "title": "银行发短信拦截境外交易（疑似欺诈交易）",
+    "keywords": [
+      "银行拦截",
+      "欺诈交易",
+      "境外交易",
+      "短信确认"
+    ],
+    "severity": "medium",
+    "cause": "银行风控模型认为夜间或首次向海外 AI SaaS 商户付款存在盗刷风险。",
+    "steps": [
+      "按银行官方短信或手机银行 App 提示回复确认“本人交易”。",
+      "确认放行后等待 5 分钟再重新发起一次支付，不要立刻连点。"
+    ],
+    "avoid": [
+      "未回复银行确认短信前连续重试，会导致卡片直接被银行临时锁卡。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=BANK_FRAUD_BLOCK",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-renewal-downgrade",
+    "code": "SUBSCRIPTION_PAST_DUE",
+    "platform": "ChatGPT / OpenAI",
+    "category": "续费异常",
+    "title": "月底自动续费失败导致 Plus 权益突然掉回免费版",
+    "keywords": [
+      "自动续费失败",
+      "past due",
+      "掉回免费版",
+      "续费"
+    ],
+    "severity": "medium",
+    "cause": "原绑定的虚拟卡余额不足、卡片过期，或发卡行临时拒绝了后台静默自动扣款。",
+    "steps": [
+      "进入 Settings -> Subscription 查看是否提示 Update payment method。",
+      "如原卡已不可用，可直接通过充自己账号月卡续费，原有对话记录与记忆不会丢失。"
+    ],
+    "avoid": [
+      "不要因为续费失败就直接废弃老账号重新注册，老账号权重通常更稳定。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=SUBSCRIPTION_PAST_DUE",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-session-token-scam",
+    "code": "SECURITY_TOKEN_LEAK_RISK",
+    "platform": "全平台",
+    "category": "安全红线",
+    "title": "代充要求提供账号密码或网页 Session Token / Cookie 是否安全？",
+    "keywords": [
+      "Session Token",
+      "Cookie",
+      "账号密码",
+      "安全",
+      "防骗"
+    ],
+    "severity": "critical",
+    "cause": "Session Token（accessToken）等价于账号的临时完整控制权，交给不可信第三方可能导致对话记录泄露、邮箱被改或被恶意滥用导致封号。",
+    "steps": [
+      "绝对不要向陌生个人或不明来源脚本交出主邮箱密码与长期 Session Token。",
+      "优先选择正规透明的官充通道，充值完成后检查账号安全设置与已登录设备列表。"
+    ],
+    "avoid": [
+      "任何要求安装来路不明的浏览器插件读取 Token 的做法都应立即拒绝。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=SECURITY_TOKEN_LEAK_RISK",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  },
+  {
+    "id": "openai-workspace-role-restricted",
+    "code": "WORKSPACE_BILLING_LOCKED",
+    "platform": "ChatGPT / OpenAI",
+    "category": "界面交互",
+    "title": "账号所在 Workspace 提示 Only owners can manage billing",
+    "keywords": [
+      "Only owners",
+      "Workspace",
+      "Team",
+      "无法自己升级"
+    ],
+    "severity": "medium",
+    "cause": "你当前切换到了某个企业或 Team 工作区（且你是普通 Member 角色），而非个人 Personal 工作区，因此没有账单管理权限。",
+    "steps": [
+      "点击右上角或左下角头像，将当前工作区从 Team/Enterprise 切换回 Personal 个人空间。",
+      "切换回 Personal 后刷新页面，即可看到正常的个人订阅升级入口。"
+    ],
+    "avoid": [
+      "不要把个人隐私数据或个人独立订阅混在陌生人拉的共享 Team 工作区里。"
+    ],
+    "onlineToolUrl": "https://gpt.imzyw.com/#error-lookup?q=WORKSPACE_BILLING_LOCKED",
+    "guideUrl": "https://gptyw.pro/guide.html"
+  }
+];
+
+  // 规则配置数据库
+  const RULE_DOMAINS = {
+    openai: [
+      "chatgpt.com",
+      "auth.openai.com",
+      "pay.openai.com",
+      "platform.openai.com",
+      "api.openai.com",
+      "oaistatic.com",
+      "oaiusercontent.com",
+      "openai.com",
+      "sentry.io"
+    ],
+    stripe: [
+      "stripe.com",
+      "checkout.stripe.com",
+      "api.stripe.com",
+      "js.stripe.com",
+      "m.stripe.network",
+      "q.stripe.com",
+      "stripe.network"
+    ],
+    google: [
+      "gemini.google.com",
+      "generativelanguage.googleapis.com",
+      "ai.google.dev",
+      "one.google.com",
+      "pay.google.com",
+      "payments.google.com"
+    ],
+    claude: [
+      "claude.ai",
+      "anthropic.com",
+      "api.anthropic.com",
+      "statsig.com",
+      "statsigapi.net"
+    ],
+    grok: [
+      "grok.com",
+      "x.ai",
+      "api.x.ai"
+    ]
+  };
+
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tool-section').forEach(sec => sec.classList.remove('active'));
+    
+    if (window.event && window.event.target) {
+      window.event.target.classList.add('active');
+    }
+    const targetEl = document.getElementById(tabId);
+    if (targetEl) targetEl.classList.add('active');
+  }
+
+  function generateRules() {
+    const groupInput = document.getElementById('group-name');
+    const group = (groupInput ? groupInput.value.trim() : '') || 'AI-US';
+    const formatEl = document.getElementById('rule-format');
+    const format = formatEl ? formatEl.value : 'clash';
+    const selected = [];
+    if (document.getElementById('cb-openai') && document.getElementById('cb-openai').checked) selected.push(...RULE_DOMAINS.openai);
+    if (document.getElementById('cb-stripe') && document.getElementById('cb-stripe').checked) selected.push(...RULE_DOMAINS.stripe);
+    if (document.getElementById('cb-google') && document.getElementById('cb-google').checked) selected.push(...RULE_DOMAINS.google);
+    if (document.getElementById('cb-claude') && document.getElementById('cb-claude').checked) selected.push(...RULE_DOMAINS.claude);
+    if (document.getElementById('cb-grok') && document.getElementById('cb-grok').checked) selected.push(...RULE_DOMAINS.grok);
+
+    // 去重
+    const domains = Array.from(new Set(selected));
+    let result = '';
+
+    if (format === 'clash') {
+      result = '# === AI 订阅与支付防封分流规则 (Clash / Mihomo) ===\n# 策略组名称: ' + group + '\n# 涵盖 OpenAI 登录与 Stripe 支付网关，彻底避免 403 / 拒付\n\npayload:\n';
+      domains.forEach(d => {
+        result += '  - DOMAIN-SUFFIX,' + d + ',' + group + '\n';
+      });
+    } else if (format === 'shadowrocket') {
+      result = '# === AI 订阅与支付防封规则 (Shadowrocket / Quantumult X) ===\n# 策略组: ' + group + '\n\n';
+      domains.forEach(d => {
+        result += 'DOMAIN-SUFFIX,' + d + ',' + group + '\n';
+      });
+    } else {
+      result = '# === Surge 规则配置 ===\n# 策略组: ' + group + '\n\n';
+      domains.forEach(d => {
+        result += 'DOMAIN-SUFFIX,' + d + ',' + group + '\n';
+      });
+    }
+
+    const codeEl = document.getElementById('rules-code');
+    if (codeEl) codeEl.textContent = result.replace(/\\n/g, '\n');
+  }
+
+  function copyCode(elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const text = el.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('已复制分流规则到剪贴板！');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('已复制分流规则到剪贴板！');
+    });
+  }
+
+  function renderErrorList(items) {
+    const container = document.getElementById('error-list');
+    const countEl = document.getElementById('error-results-count');
+    if (countEl) countEl.textContent = '当前展示 ' + items.length + ' 条相关排查记录：';
+
+    if (items.length === 0) {
+      if (container) container.innerHTML = '<div style="text-align: center; padding: 32px; color: #64748b;">未找到匹配的报错代码或关键词。建议尝试输入：OR、declined、403、Codex</div>';
+      return;
+    }
+
+    if (container) {
+      container.innerHTML = items.map(item => {
+        const sevClass = item.severity === 'high' ? 'error-tag-high' : 'error-tag-med';
+        const stepsHtml = (item.steps || []).map(s => '<li>' + s + '</li>').join('');
+        const avoidHtml = (item.avoid || []).map(a => '<li>' + a + '</li>').join('');
+
+        return [
+          '<div class="error-item">',
+          '  <div class="error-header" onclick="toggleError(\'' + item.id + '\')">',
+          '    <div class="error-title-wrap">',
+          '      <span class="error-code">' + item.code + '</span>',
+          '      <span class="error-tag ' + sevClass + '">' + item.platform + '</span>',
+          '      <span style="font-size: 13px; color: #475569;">' + item.title + '</span>',
+          '    </div>',
+          '    <span style="font-size: 12px; color: #3b82f6;" id="arrow-' + item.id + '">详情 ▼</span>',
+          '  </div>',
+          '  <div class="error-body" id="body-' + item.id + '" style="display: none;">',
+          '    <div class="error-field"><strong>根因分析：</strong> ' + item.cause + '</div>',
+          '    <div class="error-field"><strong>排查步骤：</strong><ol>' + stepsHtml + '</ol></div>',
+          '    <div class="error-field" style="color: #b91c1c;"><strong>避坑红线：</strong><ul>' + avoidHtml + '</ul></div>',
+          '  </div>',
+          '</div>'
+        ].join('');
+      }).join('');
+    }
+  }
+
+  function toggleError(id) {
+    const el = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    if (!el) return;
+    if (el.style.display === 'none') {
+      el.style.display = 'block';
+      if (arrow) arrow.textContent = '收起 ▲';
+    } else {
+      el.style.display = 'none';
+      if (arrow) arrow.textContent = '详情 ▼';
+    }
+  }
+
+  function filterErrors() {
+    const input = document.getElementById('error-input');
+    const q = (input ? input.value : '').trim().toLowerCase();
+    if (!q) {
+      renderErrorList(ERROR_CODES_DATA);
+      return;
+    }
+    const matched = ERROR_CODES_DATA.filter(item => {
+      const codeMatch = (item.code || '').toLowerCase().includes(q);
+      const titleMatch = (item.title || '').toLowerCase().includes(q);
+      const causeMatch = (item.cause || '').toLowerCase().includes(q);
+      const platMatch = (item.platform || '').toLowerCase().includes(q);
+      const kwMatch = (item.keywords || []).some(k => k.toLowerCase().includes(q));
+      return codeMatch || titleMatch || causeMatch || platMatch || kwMatch;
+    });
+    renderErrorList(matched);
+  }
+
+  function setQuery(text) {
+    const input = document.getElementById('error-input');
+    if (input) input.value = text;
+    filterErrors();
+  }
+
+  // 初始化加载
+  generateRules();
+  renderErrorList(ERROR_CODES_DATA);
+</script>
+
+</body>
+</html>
