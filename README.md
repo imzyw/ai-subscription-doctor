@@ -114,7 +114,17 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 
 - [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
 - [飞书（Lark）公开维基在线阅读版（免登录直达）](https://ucnsm4aewnst.feishu.cn/wiki/YsP9wCWNBidKl3kvHS3c34tjnMf)
-- [Codex / ChatGPT 桌面端手机验证收不到码深度排查](./docs/chatgpt-codex-phone-verification.md)
+- [Codex / OpenAI 手机收不到验证码与美区实体卡排查](./docs/codex-sms-verification-us-sim-guide.md)
+- [ChatGPT "Your card was declined" 与 Stripe 3DS 拒付排查](./docs/chatgpt-card-declined-stripe-2026.md)
+- [2026 ChatGPT Plus / Pro 100 (10x) / Pro 200 (20x) / Pro 500 (50x) 算力选型指南](./docs/chatgpt-pro-10x-20x-50x-comparison-2026.md)
+- [Google Play OR-REH-04 / OR-CCSEH-21 地区验证失败排查](./docs/gemini-or-reh-04-google-play-fix.md)
+- [Gemini 教育号与 Ultra 5x/20x 差异及 Antigravity 兼容避坑](./docs/gemini-edu-vs-ultra-antigravity-guide.md)
+- [Clash / Mihomo / Shadowrocket 防 403 防拒付分流规则实战](./docs/clash-shadowrocket-ai-anti-ban-rules.md)
+- [Claude 注册防秒封：精养 Gmail 2FA 与节点隔离清单](./docs/claude-china-register-anti-ban-checklist.md)
+- [Grok Plus 与 SuperGrok 国内稳定订阅与常见报错](./docs/grok-plus-supergrok-china-guide-2026.md)
+- [美区 Apple ID 与苹果礼品卡订阅 AI 防封防锁机指南](./docs/apple-gift-card-us-id-ai-subscription-risks.md)
+- [海外虚拟信用卡隐性开卡/手续费/封卡成本账单拆解](./docs/virtual-card-hidden-fees-vs-self-recharge.md)
+- [Codex / ChatGPT 桌面端手机验证收不到码排查（基础篇）](./docs/chatgpt-codex-phone-verification.md)
 - [2026 全平台 AI 订阅支付与风控报错百科](./docs/payment-error-codes-2026.md)
 - [飞书（Lark）公开维基导出排版稿（Markdown 源码）](./docs/lark-wiki-export.md)
 
