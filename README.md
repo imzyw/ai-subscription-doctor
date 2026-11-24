@@ -113,9 +113,10 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 ## 专题文档索引
 
 - [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
+- [飞书（Lark）公开维基在线阅读版（免登录直达）](https://ucnsm4aewnst.feishu.cn/wiki/YsP9wCWNBidKl3kvHS3c34tjnMf)
 - [Codex / ChatGPT 桌面端手机验证收不到码深度排查](./docs/chatgpt-codex-phone-verification.md)
 - [2026 全平台 AI 订阅支付与风控报错百科](./docs/payment-error-codes-2026.md)
-- [飞书（Lark）公开维基导出排版稿](./docs/lark-wiki-export.md)
+- [飞书（Lark）公开维基导出排版稿（Markdown 源码）](./docs/lark-wiki-export.md)
 
 ---
 
