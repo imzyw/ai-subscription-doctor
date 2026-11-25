@@ -114,6 +114,9 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 
 - [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
 - [飞书（Lark）公开维基在线阅读版（免登录直达）](https://ucnsm4aewnst.feishu.cn/wiki/YsP9wCWNBidKl3kvHS3c34tjnMf)
+- [DeepSeek API 调整定价（峰谷分时计费）后怎么选最省钱？对比 ChatGPT / Codex / Gemini](./docs/deepseek-api-price-hike-vs-chatgpt-codex-gemini-2026.md)
+- [2026 年底四大 AI 编程工具横评：Cursor / Claude Code / Codex / Antigravity](./docs/cursor-claude-code-codex-antigravity-coding-compare-2026.md)
+- [2026 美区 Apple ID 充值礼品卡被锁 / 72 小时风控解封排查指南](./docs/us-apple-id-gift-card-72h-lock-unlock-guide-2026.md)
 - [Google AI Pro 改版（原 Gemini Advanced）与 Plus / Ultra 5x·20x 反重力额度避坑指南](./docs/google-ai-pro-vs-plus-ultra-antigravity-2026.md)
 - [Claude Max（5x/20x）与 Claude Code 封号会退款吗？2026 诱因排查与止损手册](./docs/claude-max-code-ban-refund-appeal-2026.md)
 - [ChatGPT 微软 Outlook / 企业邮箱收不到登录验证码（OTP）急救指南](./docs/chatgpt-outlook-corporate-email-otp-ban-fix-2026.md)
