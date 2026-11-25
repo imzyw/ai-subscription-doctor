@@ -114,6 +114,9 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 
 - [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
 - [飞书（Lark）公开维基在线阅读版（免登录直达）](https://ucnsm4aewnst.feishu.cn/wiki/YsP9wCWNBidKl3kvHS3c34tjnMf)
+- [Google AI Pro 改版（原 Gemini Advanced）与 Plus / Ultra 5x·20x 反重力额度避坑指南](./docs/google-ai-pro-vs-plus-ultra-antigravity-2026.md)
+- [Claude Max（5x/20x）与 Claude Code 封号会退款吗？2026 诱因排查与止损手册](./docs/claude-max-code-ban-refund-appeal-2026.md)
+- [ChatGPT 微软 Outlook / 企业邮箱收不到登录验证码（OTP）急救指南](./docs/chatgpt-outlook-corporate-email-otp-ban-fix-2026.md)
 - [Codex / OpenAI 手机收不到验证码与美区实体卡排查](./docs/codex-sms-verification-us-sim-guide.md)
 - [ChatGPT "Your card was declined" 与 Stripe 3DS 拒付排查](./docs/chatgpt-card-declined-stripe-2026.md)
 - [2026 ChatGPT Plus / Pro 100 (10x) / Pro 200 (20x) / Pro 500 (50x) 算力选型指南](./docs/chatgpt-pro-10x-20x-50x-comparison-2026.md)
