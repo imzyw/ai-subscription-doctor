@@ -112,6 +112,14 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 
 ## 专题文档索引
 
+### 2026 年 11 月底最新动态与避坑专刊（在线图文直读）
+- [GPT-6.2 Astra 额度掉快 40%？11 月 26 日计费修复与 Banked Reset 应对指南](https://gpt.imzyw.com/guides/gpt-6-2-astra-sol-quota-cut-40-percent-banked-reset-2026/)
+- [Google AI Plus 不能选 Pro 模型了？2026 年 11 月档位大改与 Gemini 4 Carbon 涨价前攻略](https://gpt.imzyw.com/guides/google-ai-plus-removed-pro-model-upgrade-pro-guide-2026/)
+- [Claude Mythos 5.2 与 Fable 5.2 怎么选？Rust 提速与近期报错波动应对指南](https://gpt.imzyw.com/guides/claude-mythos-5-2-vs-fable-5-2-rust-api-outage-guide-2026/)
+- [Grok Bot 1.3.0 上线与 SuperGrok 算力限额：2026 年底 Grok 还值得买吗？](https://gpt.imzyw.com/guides/grok-bot-1-3-supergrok-limits-china-subscribe-2026/)
+- [ChatGPT / Claude / Gemini 绑卡一直报 Your card was declined？2026 银行 CNP 与 3DS 排查清单](https://gpt.imzyw.com/guides/chatgpt-claude-gemini-3ds-cnp-card-declined-2026-checklist/)
+
+### 完整排查与对比知识库
 - [在线免费工具箱（GitHub Pages 直达）](https://imzyw.github.io/ai-subscription-doctor/)
 - [飞书（Lark）公开维基在线阅读版（免登录直达）](https://ucnsm4aewnst.feishu.cn/wiki/YsP9wCWNBidKl3kvHS3c34tjnMf)
 - [DeepSeek API 调整定价（峰谷分时计费）后怎么选最省钱？对比 ChatGPT / Codex / Gemini](./docs/deepseek-api-price-hike-vs-chatgpt-codex-gemini-2026.md)
