@@ -113,6 +113,10 @@ Avoid    : 1 小时内连续解绑重绑银行卡会把冷却期拉长至 14 天
 ## 专题文档索引
 
 ### 2026 年 11 月底最新动态与避坑专刊（在线图文直读）
+- [12 月新规后 ChatGPT 怎么选？Go / Plus / Pro 10x / 20x / 50x 额度与人群对照](https://gpt.imzyw.com/guides/chatgpt-go-vs-plus-vs-pro-10x-20x-50x-december-2026/)
+- [Gemini Tasks 定时自动任务怎么用？国内开启条件与 ChatGPT Tasks 实测对比](https://gpt.imzyw.com/guides/gemini-4-tasks-scheduled-automation-china-guide-2026/)
+- [Claude Code 写大项目总撞 5 小时限额？6 个实测省一半 Token 的工程技巧](https://gpt.imzyw.com/guides/claude-code-rate-limit-5h-window-tips-2026/)
+- [2026 AI 深度搜索横评：Perplexity Pro、ChatGPT Search 与 Grok DeepSearch 谁最准？](https://gpt.imzyw.com/guides/perplexity-pro-vs-chatgpt-search-vs-grok-deepsearch-2026/)
 - [GPT-6.2 Astra 额度掉快 40%？11 月 26 日计费修复与 Banked Reset 应对指南](https://gpt.imzyw.com/guides/gpt-6-2-astra-sol-quota-cut-40-percent-banked-reset-2026/)
 - [Google AI Plus 不能选 Pro 模型了？2026 年 11 月档位大改与 Gemini 4 Carbon 涨价前攻略](https://gpt.imzyw.com/guides/google-ai-plus-removed-pro-model-upgrade-pro-guide-2026/)
 - [Claude Mythos 5.2 与 Fable 5.2 怎么选？Rust 提速与近期报错波动应对指南](https://gpt.imzyw.com/guides/claude-mythos-5-2-vs-fable-5-2-rust-api-outage-guide-2026/)
